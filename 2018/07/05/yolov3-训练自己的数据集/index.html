@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,yolo, yolov3," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="== 博文参考链接： https://blog.csdn.net/lilai619/article/details/79695109 #f3081a== 数据集制作图片收集从网络收集图片，通过脚本统一修改文件名，然后使用labelImg进行标注即可，因为在Linux系统中文件命中若包含中文、特殊字符会导致生成TXT文件时或者训练时出现难以预料的错误。重命名脚本如下：dataset.py123456">
+<meta name="keywords" content="深度学习,yolo, yolov3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yolov3-训练自己的数据集">
+<meta property="og:url" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="== 博文参考链接： https://blog.csdn.net/lilai619/article/details/79695109 #f3081a== 数据集制作图片收集从网络收集图片，通过脚本统一修改文件名，然后使用labelImg进行标注即可，因为在Linux系统中文件命中若包含中文、特殊字符会导致生成TXT文件时或者训练时出现难以预料的错误。重命名脚本如下：dataset.py123456">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1527146860398.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528338600910.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1527147605762.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528338654802.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528269619727.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528277437315.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528281381548.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528278075492.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528278756610.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528278811419.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528278878106.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528279299173.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1528279575367.jpg">
+<meta property="og:updated_time" content="2018-07-05T03:35:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="yolov3-训练自己的数据集">
+<meta name="twitter:description" content="== 博文参考链接： https://blog.csdn.net/lilai619/article/details/79695109 #f3081a== 数据集制作图片收集从网络收集图片，通过脚本统一修改文件名，然后使用labelImg进行标注即可，因为在Linux系统中文件命中若包含中文、特殊字符会导致生成TXT文件时或者训练时出现难以预料的错误。重命名脚本如下：dataset.py123456">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/images/1527146860398.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/"/>
+
+
+
+
+
+  <title>yolov3-训练自己的数据集 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/yolov3-训练自己的数据集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">yolov3-训练自己的数据集</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-05T07:36:38+00:00">
+                2018-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>== 博文参考链接： <a href="https://blog.csdn.net/lilai619/article/details/79695109" target="_blank" rel="noopener">https://blog.csdn.net/lilai619/article/details/79695109</a> #f3081a==</p>
+<h1 id="数据集制作"><a href="#数据集制作" class="headerlink" title="数据集制作"></a>数据集制作</h1><h2 id="图片收集"><a href="#图片收集" class="headerlink" title="图片收集"></a>图片收集</h2><p>从网络收集图片，通过脚本统一修改文件名，然后使用labelImg进行标注即可，因为在Linux系统中文件命中若包含中文、特殊字符会导致生成TXT文件时或者训练时出现难以预料的错误。<br>重命名脚本如下：<br>dataset.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定文件夹目录</span></span><br><span class="line">image_dir = <span class="string">'E:/test/'</span></span><br><span class="line"><span class="comment"># 指定输出文件夹</span></span><br><span class="line">save_dir = <span class="string">'E:/output/'</span></span><br><span class="line"><span class="comment"># 指定新文件名前缀</span></span><br><span class="line">new_name = <span class="string">'test_'</span></span><br></pre></td></tr></table></figure></p>
+<p>rename.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> dataset</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line">image_dir = dataset.image_dir</span><br><span class="line">save_dir = dataset.save_dir</span><br><span class="line">new_name = dataset.new_name</span><br><span class="line">os.chdir(dataset.image_dir)</span><br><span class="line">files = os.listdir()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(files), <span class="number">1</span>):</span><br><span class="line">    os.rename(image_dir + files[i], save_dir + new_name + str(i) + <span class="string">'.'</span> + str(files[i]).split(<span class="string">'.'</span>)[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure></p>
+<h2 id="制作VOC格式数据集"><a href="#制作VOC格式数据集" class="headerlink" title="制作VOC格式数据集"></a>制作VOC格式数据集</h2><p>从网上下载LabelImg可执行文件，进行图片标注即可，LabelImg使用具体请参考网络。<br>  注意：<br> **1. labelimg windows版本解压即可使用。</p>
+<ol start="2">
+<li>修改data文件下的 predefined_classes.txt，添加自己需要的类。</li>
+<li>图像路径不能有中文。<strong><br>图片标记好后，将图片和xml上传到服务器即可。
+</strong>==图片文件夹改名为JPEGImages<br>XML文件夹修改问Annotations==**<br>上传后文件夹结构最好如下图所示，其中test改为自己项目名称或者自定义即可<br><img src="./images/1527146860398.jpg" alt="enter description here"><br>原因为采用此种文件层级形式，在使用其他框架如caffe-ssd Faster-RCNN 时生成数据集时都是通用，无需修改官方自带生成数据集脚本文件即可使用，较为方便快捷，如果自己的文件夹架构，则需修改相应脚本文件。<br>在VOC2007文件夹下添加如下文件<br>即目录结构为如下图所示<br><img src="./images/1528338600910.jpg" alt="enter description here"><br>create_ImageSets.py <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># encoding:utf-8</span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import random</span><br><span class="line">import glob</span><br><span class="line"></span><br><span class="line"># 测试集test, 总数据的50%</span><br><span class="line"># 训练和验证集train_val, 除去测试的剩余50%</span><br><span class="line"># trainval中训练部分train, trainval的50%</span><br><span class="line"># trainval中验证集val, trainval的50%</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">try:</span><br><span class="line">    test_percent = int(sys.argv[1])</span><br><span class="line">    train_percent = int(sys.argv[2])</span><br><span class="line">except:</span><br><span class="line">    print &apos;Please input picture range&apos;</span><br><span class="line">    print &apos;./createTest.py  test_number&apos;</span><br><span class="line">    os._exit(0)</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">IMAGE_SETS_PATH = &apos;ImageSets&apos;</span><br><span class="line">MAIN_PATH = &apos;ImageSets/Main&apos;</span><br><span class="line">XML_FILE_PATH = &apos;Annotations&apos;</span><br><span class="line">JPEGImages_PATH = &apos;JPEGImages&apos;</span><br><span class="line"></span><br><span class="line">test_percent = 0.66    #test样本占所有样本的百分比</span><br><span class="line">train_percent = 1.0   #train样本占train+val样本的百分比</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 创建ImageSets数据集</span><br><span class="line">if not os.path.exists(IMAGE_SETS_PATH):</span><br><span class="line">        os.mkdir(IMAGE_SETS_PATH)</span><br><span class="line">        os.mkdir(MAIN_PATH)</span><br><span class="line">else:</span><br><span class="line">        if not os.path.exists(MAIN_PATH):</span><br><span class="line">                os.mkdir(MAIN_PATH)</span><br><span class="line"></span><br><span class="line">img_list = os.listdir(JPEGImages_PATH)</span><br><span class="line">numOfImg = len(img_list)</span><br><span class="line"></span><br><span class="line">test_number = int(numOfImg*test_percent)</span><br><span class="line">trainval_number = numOfImg - test_number</span><br><span class="line">train_number = int(trainval_number*train_percent)</span><br><span class="line"></span><br><span class="line">all_id = range(numOfImg)</span><br><span class="line">test_id = sorted(random.sample(all_id, test_number))</span><br><span class="line">trainval_id = list(set(all_id).difference(set(test_id)))</span><br><span class="line">train_id = sorted(random.sample(trainval_id, train_number))</span><br><span class="line">val_id = list( set(trainval_id).difference(set(train_id)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">trainFile = open(os.path.join(MAIN_PATH,&apos;train.txt&apos;),&apos;w&apos;)</span><br><span class="line">valFile = open(os.path.join(MAIN_PATH,&apos;val.txt&apos;),&apos;w&apos;)</span><br><span class="line">trainvalFile = open(os.path.join(MAIN_PATH,&apos;trainval.txt&apos;),&apos;w&apos;)</span><br><span class="line">testFile = open(os.path.join(MAIN_PATH,&apos;test.txt&apos;),&apos;w&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#totalFileCount = sum([len(files) for root, dirs, files in os.walk(path)])</span><br><span class="line"></span><br><span class="line">for i in range(numOfImg):</span><br><span class="line">        if i in test_id:</span><br><span class="line">                testFile.write(img_list[i].split(&apos;.&apos;)[0]+&apos;\n&apos;)</span><br><span class="line">        else:</span><br><span class="line">                trainvalFile.write(img_list[i].split(&apos;.&apos;)[0]+&apos;\n&apos;)</span><br><span class="line">                if i in train_id:</span><br><span class="line">                        trainFile.write(img_list[i].split(&apos;.&apos;)[0]+&apos;\n&apos;)</span><br><span class="line">                else:</span><br><span class="line">                        valFile.write(img_list[i].split(&apos;.&apos;)[0]+&apos;\n&apos;)</span><br><span class="line"></span><br><span class="line">trainFile.close()</span><br><span class="line">testFile.close()</span><br><span class="line">trainvalFile.close()</span><br><span class="line">valFile.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>之后执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python create_ImageSets.py</span><br></pre></td></tr></table></figure></p>
+<p>即可，正常运行后即可在VOC2007文件夹下看到ImageSets文件夹。ImageSets文件结构如下<br><img src="./images/1527147605762.jpg" alt="enter description here"></p>
+<p>至此，VOC数据集准备完成</p>
+<h1 id="yolov3-训练"><a href="#yolov3-训练" class="headerlink" title="yolov3 训练"></a>yolov3 训练</h1><h2 id="1-链接数据集文件"><a href="#1-链接数据集文件" class="headerlink" title="1 链接数据集文件"></a>1 链接数据集文件</h2><p> 在yolo-v3文件夹下创建自己的项目目录，目录命名可以以项目命名<br> 如 test<br> 227yolov3地址为<br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/home/dl/yolo/yolo-v3/darknet</span><br><span class="line">``` </span><br><span class="line">项目文件夹</span><br><span class="line">```shell</span><br><span class="line">/home/dl/yolo/yolo-v3/darknet/test</span><br></pre></td></tr></table></figure></p>
+<p> 创建数据集快捷方式，目的是为了数据集同一放置，而且可以供多用户多框架使用，不至于太混乱<br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/dl/yolo/yolo-v3/darknet</span><br><span class="line">cd test</span><br><span class="line">ln -s /home/dl/data/test/VOCdevkit2007/VOC2007 VOC2007</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-生成数据集文件txt"><a href="#2-生成数据集文件txt" class="headerlink" title="2  生成数据集文件txt"></a>2  生成数据集文件txt</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp ../tools/voc_label.py .</span><br></pre></td></tr></table></figure>
+<p> 复制后的文件结构如下<br> <img src="./images/1528338654802.jpg" alt="enter e"><br> 修改voc_label.py 如此次训练为两个类，”up” 和”down”,则修改为<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classes=[&quot;up&quot;,&quot;down&quot;]</span><br></pre></td></tr></table></figure></p>
+<p> 使得classes的值为自己的标签<br> 然后执行生成即可<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python voc_label.py</span><br></pre></td></tr></table></figure></p>
+<p> 执行完成后可以看到目录下面有如下文件，其中主要的为train.txt test.txt<br> <img src="./images/1528269619727.jpg" alt="enter description here"></p>
+<h2 id="3-复制和创建配置文件"><a href="#3-复制和创建配置文件" class="headerlink" title="3 复制和创建配置文件"></a>3 复制和创建配置文件</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp ../cfg/yolov3-voc.cfg test_train.cfg </span><br><span class="line">cp ../cfg/voc.data test_voc.data</span><br><span class="line">touch test_voc.names</span><br></pre></td></tr></table></figure>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><h3 id="names文件修改"><a href="#names文件修改" class="headerlink" title="names文件修改"></a>names文件修改</h3><p> 修改test_voc.names文件内容为训练的类别内容，如此次训练为两个类，”up” 和”down”,则修改为如下图所示即可<br> <img src="./images/1528277437315.jpg" alt="enter description here"></p>
+<h3 id="data文件修改"><a href="#data文件修改" class="headerlink" title="data文件修改"></a>data文件修改</h3><ol>
+<li>classes 值修改为类别总数，不用包含背景，如此次训练为两个类，”up” 和”down”,则修改为2</li>
+<li>train 修改为刚刚生成的train.txt全路径</li>
+<li>test 修改为刚刚生成的test.txt全路径</li>
+<li><p>backup 指定输出文件夹，可以全路径或者相对路径，但是一定要确保文件夹存在<br>配置好后如下图所示<br><img src="./images/1528281381548.jpg" alt="enter description here"></p>
+<h3 id="cfg文件夹修改"><a href="#cfg文件夹修改" class="headerlink" title="cfg文件夹修改"></a>cfg文件夹修改</h3><ol>
+<li>修改batch和subdivisions 根据自己的显存情况，一般8g 640*480 改成32 16 即可，具体没有测试，训练的参数一般为batch=32 subdivisions=16 测试使用的为同一cfg文件，但是batch和subdivisions都要改为1 即batch=1 subdivisions=1</li>
+<li>width = 640  修改为自己图片的宽</li>
+<li>height = 480  修改为自己图片的高<br><img src="./images/1528278075492.jpg" alt="enter description here"></li>
+</ol>
+</li>
+<li><p>修改classe和fillter值，此cfg文件总共需要修改三次<br> classes值为类别总数，如此例子包含”up” “down”两类，即classes=2<br> fillter= (num/3)*(classes + 1 + 4 )<br> 综上 num=9 时<br> classes = 2<br> fillter= 21</p>
+<p> 注意  每层根据num来计算<br> 第一处<br> <img src="./images/1528278756610.jpg" alt="enter description here"><br> 第二处<br> <img src="./images/1528278811419.jpg" alt="enter description here"><br> 第三处<br> <img src="./images/1528278878106.jpg" alt="enter description here"></p>
+</li>
+</ol>
+<p>至此配置文件修改完成</p>
+<h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><h2 id="初次训练"><a href="#初次训练" class="headerlink" title="初次训练"></a>初次训练</h2><p>回到yolov3的编译目录，即有darknet可执行文件的目录<br>本例为<br>/home/dl/yolo/yolo-v3/darknet</p>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/dl/yolo/yolo-v3/darknet</span><br><span class="line">./darknet detector train test/test_voc.data test/test_train.cfg darknet53.conv.74</span><br></pre></td></tr></table></figure></p>
+<p>参数解释:<br>其中.data</p>
+<ul>
+<li>.data 文件为前面自己配置好的test_voc.data  可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li>cfg也为前面修改好的cfg文件 可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li>darknet53.conv.74 为官网预训练模型，可以使用预训练模型，也可以不使用。 可以决定路径或者相对路径输入，上面使用相对路径输入<br>训练后效果图<br><img src="./images/1528279299173.jpg" alt=""></li>
+</ul>
+<p>如果全为None则前面步骤存在问题，需要检查上述步骤是否出现问题，或者出现遗漏。</p>
+<h2 id="继续上次训练"><a href="#继续上次训练" class="headerlink" title="继续上次训练"></a>继续上次训练</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./darknet detector train test/test_voc.data test/test_train.cfg test/out/yolov3_test_train.backup</span><br></pre></td></tr></table></figure>
+<p>参数解释:<br>其中.data</p>
+<ul>
+<li>.data 文件为前面自己配置好的test_voc.data  可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li>cfg也为前面修改好的cfg文件 可以决定路径或者相对路径输入，上面使用相对路径输入<br>-test/out/yolov3_test_train.backup  为上次训的checkpoint，有此参数可以继续上一次训练，没有则从0开始训练，具体路径在.data文件指定的backup文件夹里面。 可以决定路径或者相对路径输入，上面使用相对路径输入<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="复制测试文件"><a href="#复制测试文件" class="headerlink" title="复制测试文件"></a>复制测试文件</h2>复制训练所用到的cfg文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp test/test_train.cfg test/test_test.cfg</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>将batch和subdivisions都要改为1 即batch=1 subdivisions=1，如下图所示<br><img src="./images/1528279575367.jpg" alt="enter description here"></li>
+</ol>
+<h2 id="执行测试"><a href="#执行测试" class="headerlink" title="执行测试"></a>执行测试</h2><p>回到yolov3的编译目录，即有darknet可执行文件的目录<br>本例为<br>/home/dl/yolo/yolo-v3/darknet</p>
+<p>相机实时测试执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/dl/yolo/yolo-v3/darknet</span><br><span class="line">./darknet detector demo test/test_voc.data test/test_test.cfg test/out/test_10000.weights</span><br></pre></td></tr></table></figure></p>
+<p>参数解释:</p>
+<ul>
+<li>.data 文件为前面自己配置好的test_voc.data  可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li>cfg也为前面修改好的cfg文件 可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li><p>test/out/test_10000.weights 为训练后生成权重文件，具体目录在data文件中指定的路径下面。可以决定路径或者相对路径输入，上面使用相对路径输入</p>
+<p>图片执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./darknet detector test test/test_voc.data test/test_test.cfg test/out/test_10000.weights data/test.jpg</span><br></pre></td></tr></table></figure>
+<p>参数解释:</p>
+</li>
+<li><p>.data 文件为前面自己配置好的test_voc.data  可以决定路径或者相对路径输入，上面使用相对路径输入</p>
+</li>
+<li>cfg也为前面修改好的cfg文件 可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li>test/out/test_10000.weights 为训练后生成权重文件，具体目录在data文件中指定的路径下面。的可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+<li>data/test.jpg  为需要测试的图片。可以决定路径或者相对路径输入，上面使用相对路径输入</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习-yolo-yolov3/" rel="tag"># 深度学习,yolo, yolov3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/05/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据集制作"><span class="nav-number">1.</span> <span class="nav-text">数据集制作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片收集"><span class="nav-number">1.1.</span> <span class="nav-text">图片收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作VOC格式数据集"><span class="nav-number">1.2.</span> <span class="nav-text">制作VOC格式数据集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yolov3-训练"><span class="nav-number">2.</span> <span class="nav-text">yolov3 训练</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-链接数据集文件"><span class="nav-number">2.1.</span> <span class="nav-text">1 链接数据集文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-生成数据集文件txt"><span class="nav-number">2.2.</span> <span class="nav-text">2  生成数据集文件txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-复制和创建配置文件"><span class="nav-number">2.3.</span> <span class="nav-text">3 复制和创建配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置文件"><span class="nav-number">2.4.</span> <span class="nav-text">修改配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#names文件修改"><span class="nav-number">2.4.1.</span> <span class="nav-text">names文件修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data文件修改"><span class="nav-number">2.4.2.</span> <span class="nav-text">data文件修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cfg文件夹修改"><span class="nav-number">2.4.3.</span> <span class="nav-text">cfg文件夹修改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练"><span class="nav-number">3.</span> <span class="nav-text">训练</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初次训练"><span class="nav-number">3.1.</span> <span class="nav-text">初次训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继续上次训练"><span class="nav-number">3.2.</span> <span class="nav-text">继续上次训练</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复制测试文件"><span class="nav-number">4.1.</span> <span class="nav-text">复制测试文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行测试"><span class="nav-number">4.2.</span> <span class="nav-text">执行测试</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
